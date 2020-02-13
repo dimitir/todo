@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
   console.log(isDevelopmentMode);
 
   return {
-    entry: ['babel-polyfill', './src/client/main.js'],
+    entry: ['babel-polyfill', './src/client/main.tsx'],
     output: {
       path: path.join(__dirname, outputDirectory),
       filename: '[name].js',
@@ -23,6 +23,13 @@ module.exports = (env, argv) => {
         use: {
           loader: 'babel-loader'
         }
+      },
+      {
+        test: /\.ts(x)?$/,
+        use: [
+          'awesome-typescript-loader'
+        ],
+        exclude: /node_modules/
       },
       {
         test: /\.module\.s(a|c)ss$/,
@@ -76,7 +83,7 @@ module.exports = (env, argv) => {
       ]
     },
     resolve: {
-      extensions: ['*', '.js', '.jsx']
+      extensions: ['*', '.js', '.jsx', '.tsx', '.ts']
     },
     devServer: {
       port: 3000,
@@ -85,6 +92,7 @@ module.exports = (env, argv) => {
         '/api': 'http://localhost:8080'
       }
     },
+
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({

@@ -7,12 +7,15 @@ import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App';
-/* import reducer from './store/reducers';
-import './app.css'; */
+import reducer from './store/reducers';
+/*import './app.css'; */
 
-// const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>
+  ,
   document.getElementById('root')
 );
