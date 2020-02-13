@@ -35,6 +35,7 @@ module.exports = (env, argv) => {
         test: /\.module\.s(a|c)ss$/,
         loader: [
           isDevelopmentMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          { loader: "css-modules-typescript-loader" },
           {
             loader: 'css-loader',
             options: {
@@ -49,6 +50,7 @@ module.exports = (env, argv) => {
           }
         ]
       },
+
       {
         test: /\.s(a|c)ss$/,
         exclude: /\.module.(s(a|c)ss)$/,
@@ -65,9 +67,9 @@ module.exports = (env, argv) => {
           }
         ]
       },
-
       {
         test: /\.css$/,
+        exclude: /\.module.css$/,
         use: [{
           loader: MiniCssExtractPlugin.loader,
         },
@@ -77,13 +79,29 @@ module.exports = (env, argv) => {
         ]
       },
       {
+        test: /\.module\.css$/,
+        use: [
+          isDevelopmentMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          "css-modules-typescript-loader",
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: {
+                localIdentName: '[local]___[hash:base64:5]',
+              }
+            }
+          },
+        ]
+      },
+      {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         loader: 'url-loader?limit=100000'
       }
       ]
     },
     resolve: {
-      extensions: ['*', '.js', '.jsx', '.tsx', '.ts']
+      extensions: ['*', '.js', '.jsx', '.tsx', '.ts', '.css', '.scss']
     },
     devServer: {
       port: 3000,

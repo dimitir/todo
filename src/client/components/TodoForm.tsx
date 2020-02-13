@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { PropsFromRedux } from './TodoFormContainer';
+import style from './todoForm.module.scss';
+import steleCss from './todo.module.css';
 
-export interface addTodoTypes {
-    (td: string): void;
-}
+
 
 const TodoForm: React.FC<PropsFromRedux> = ({ addTodo }: PropsFromRedux) => {
 
@@ -20,21 +20,37 @@ const TodoForm: React.FC<PropsFromRedux> = ({ addTodo }: PropsFromRedux) => {
     }
 
     /*  const changeHendler = (event: React.ChangeEvent<HTMLInputElement>) => {
-         // setTitle(event.target.value);
+         // setTitle(event.target.value);  brand-logo
      } */
     return (
         <>
-            <div className="row">
-                <form className="col s12">
-                    <div className="input-field col s10">
-                        <input id="setTask"
-                            ref={ref}
-                            onKeyPress={keyPressHendler}
-                            type="text" className="validate" placeholder="Input task" />
-                        <label htmlFor="setTask">Input task</label>
-                    </div>
-                    <a className="btn-floating btn-large waves-effect waves-light red"><i className="material-icons">add</i></a>
-                </form>
+            <nav className={`nav-wrapper  ${style.toodoTitle}`}>
+                <div className={`nav-wrapper ${style.doTitle}`}>
+                    <a href="#" className={` ${style.todoA}`} >Todo list</a>
+                </div>
+            </nav>
+            <div className="container">
+
+                <div className="row">
+                    <form className={`col s12 ${steleCss.mainteg}`}>
+
+                        <div className="input-field col s5  ">
+                            <input id="setTask"
+                                ref={ref}
+                                onKeyPress={keyPressHendler}
+                                type="text" className="validate" />
+                            <label htmlFor="setTask">Title task</label>
+                        </div>
+
+                        <div className="input-field col s12">
+                            <textarea id="textarea1" className="materialize-textarea"></textarea>
+                            <label htmlFor="textarea1">Discription</label>
+                        </div>
+                        <div className={`col s12 ${style.test}  ${style.newname}`} >
+                            <a className="waves-effect waves-light btn">button</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </>
     )
