@@ -2,10 +2,6 @@
 // Please do not change this file!
 interface CssExports {
   'doTitle': string;
-  'newname': string;
-  'test': string;
-  'todoA': string;
-  'toodoTitle': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

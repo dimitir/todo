@@ -12,7 +12,8 @@ const todoReducer = (state = initialState, action: ActionType) => {
         case dispatchActions.ADD_NEW_TODO:
             state.todoArr.push({
                 id: new Date().getTime(),
-                item: action.payload,
+                title: action.payload.title,
+                discription: action.payload.discription,
                 done: false
             })
             return {

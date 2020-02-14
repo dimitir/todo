@@ -2,8 +2,8 @@ import { Component } from 'react';
 import React from 'react'
 import './app.css';
 // import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import FieldsList from './components/FieldsList';
-import TodoFormContainer from './components/TodoFormContainer';
+import MakeTodoContainer from './components/makeTodo/MakeTodoContainer';
+import Navbar from './components/navbar/Navbar';
 
 export default class App extends Component {
 
@@ -11,8 +11,8 @@ export default class App extends Component {
 
         return (
             <>
-                    <TodoFormContainer />
-                    <FieldsList />
+                <Navbar />
+                <MakeTodoContainer />
             </>
         )
     }

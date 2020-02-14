@@ -1,12 +1,19 @@
 
- export interface ActionType {
+export interface ActionTypePayload {
+    title: string,
+    discription: string
+}
+
+export interface ActionType {
     type: string;
-    payload: string;
+    payload: ActionTypePayload
+
 }
 
 export interface TodoItem {
     id: number;
-    item: string;
+    title: string;
+    discription: string;
     done: boolean;
 }
 
@@ -14,4 +21,3 @@ export interface TodoItem {
 export interface InitialStateType {
     todoArr: any[] | [TodoItem]
 }
- 

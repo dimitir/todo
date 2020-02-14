@@ -1,11 +1,15 @@
 import { combineReducers } from 'redux';
-import todoReducer from './todo/reducer';
+import { ConnectedProps } from 'react-redux';
+import todoListItems from './todo/reducer';
+import { InitialStateType } from './types';
 
 
 const rootReducer = combineReducers({
-    todo: todoReducer,
+    todoListItems,
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+export interface RootState {
+    todoListItems: InitialStateType
+}
 
 export default rootReducer;
