@@ -1,12 +1,12 @@
 import MakeTodo from './MakeTodo';
 import { connect, ConnectedProps } from 'react-redux';
 import { addNewTodo } from '../../store/toDo/actions';
-import { ActionTypePayload } from '../../store/types';
+import { ActionTypeMakePayload } from '../../store/types';
 
 
 
 const mapDispatchToProps = (dispatch: any) => ({
-    addTodo: (todo: ActionTypePayload) => dispatch(addNewTodo(todo))
+    addTodo: (todo: ActionTypeMakePayload) => dispatch(addNewTodo(todo))
 })
 
 

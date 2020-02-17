@@ -1,7 +1,12 @@
 import dispatchActions from '../dispatchActions';
-import { ActionType, ActionTypePayload } from '../types';
+import { ActionTypeCompleted, ActionTypeMake, ActionTypeMakePayload } from '../types';
 
-export const addNewTodo = (todo: ActionTypePayload): ActionType => ({
+export const addNewTodo = (todo: ActionTypeMakePayload): ActionTypeMake => ({
     type: dispatchActions.ADD_NEW_TODO,
     payload: todo
+})
+
+export const competed = (id: number): ActionTypeCompleted => ({
+    type: dispatchActions.COMPLETED_TASK,
+    id: id
 })

@@ -7,10 +7,8 @@ const mapToProps = (state: RootState) => ({
 })
 
 
-const connector = connect(mapToProps, null);
+const connector = connect(mapToProps);
 
 
-export default connector(TodoList);
 export type TodoListPropsType = ConnectedProps<typeof connector>;
-
-
+export default connector(TodoList);

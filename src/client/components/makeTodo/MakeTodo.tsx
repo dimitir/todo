@@ -14,7 +14,6 @@ const TodoForm: React.FC<MakeTodoPropsType> = ({ addTodo }: MakeTodoPropsType) =
     const { register, reset, handleSubmit, errors } = useForm<FormData>();
     const onSubmit = handleSubmit(({ todoTitle, todoDiscription }, e) => {
         const dataTodo = { title: todoTitle, discription: todoDiscription };
-        console.log(dataTodo);
         addTodo(dataTodo);
         reset({
             todoTitle: "",
@@ -29,10 +28,13 @@ const TodoForm: React.FC<MakeTodoPropsType> = ({ addTodo }: MakeTodoPropsType) =
                 <div className="row">
                     <form onSubmit={onSubmit} className={`col s12 `}>
 
-                        <div className="input-field col s9  ">
-                            <input ref={register} id="setTask" name='todoTitle'
+                        <div className={` input-field col s9 ${style.inputTitleTodo}`} >
+                            <input
+                                ref={register({ required: true })}
+                                id="setTask" name='todoTitle'
                                 type="text" className="validate" />
                             <label htmlFor="setTask">Title task</label>
+                            {errors.todoTitle && 'Title todo is required'}
                         </div>
 
                         <div className="input-field col s12">

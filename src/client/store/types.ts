@@ -1,23 +1,31 @@
 
-export interface ActionTypePayload {
-    title: string,
-    discription: string
+export interface ActionTypeMakePayload {
+    title: string;
+    discription: string;
 }
 
-export interface ActionType {
+export interface ActionTypeMake {
     type: string;
-    payload: ActionTypePayload
+    payload: ActionTypeMakePayload;
 
 }
 
-export interface TodoItem {
+
+export interface ActionTypeCompleted {
+    type: string;
+    id: number;
+}
+
+export interface TodoItemType {
     id: number;
     title: string;
     discription: string;
-    done: boolean;
+    completed: boolean;
 }
-
 
 export interface InitialStateType {
-    todoArr: any[] | [TodoItem]
+    todoArr: any[] | TodoItemType[]
 }
+
+
+export interface ActionType extends ActionTypeCompleted, ActionTypeMake{};
