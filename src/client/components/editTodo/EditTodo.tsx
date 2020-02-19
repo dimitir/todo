@@ -1,39 +1,48 @@
 import React from 'react';
+import queryString from 'query-string'
+import { TypePropsEdit } from './EditTodoContainer';
 import { useForm } from "react-hook-form";
-import { MakeTodoPropsType } from './MakeTodoContainer';
-import style from './makeTodo.module.scss';
-import TodoListContainer from '../todoList/todoListContainer';
-import { FormData } from '../../store/types';
+import style from '../makeTodo/makeTodo.module.scss';
+import { FormData, TodoItemType } from '../../store/types';
+import { useHistory } from 'react-router-dom'
+
+interface commonEditProps extends TypePropsEdit {
+    location: { search: string }
+}
 
 
 
+const EditTodo: React.FC<commonEditProps> = ({ location, todoItems, editTodo }: commonEditProps) => {
 
-const TodoForm: React.FC<MakeTodoPropsType> = ({ addTodo }: MakeTodoPropsType) => {
-    const { register, reset, handleSubmit, errors } = useForm<FormData>();
-    const onSubmit = handleSubmit(({ todoTitle, todoDiscription }, e) => {
-        const dataTodo = {
-            id: new Date().getTime(),
-            title: todoTitle,
-            discription: todoDiscription,
-            completed: false
-        };
-        addTodo(dataTodo);
-        reset({
-            todoTitle: "",
-            todoDiscription: ""
-        });
+    const history = useHistory();
+    const query = queryString.parse(location.search);
+    const idResently = query.id;
+    const idNumber = Number(idResently);
+    const resentlyTodo: TodoItemType[] = todoItems.todoArr.filter((todo: TodoItemType) => todo.id == idNumber);
+    console.group('jljkj');
+    console.log(resentlyTodo);
+    const { register, handleSubmit, errors } = useForm<FormData>({
+        defaultValues: {
+            todoTitle: resentlyTodo[0].title,
+            todoDiscription: resentlyTodo[0].discription,
+        }
     });
 
+
+
+    const onSubmit = handleSubmit(({ todoTitle, todoDiscription }) => {
+        editTodo({ id: idNumber, title: todoTitle, discription: todoDiscription });
+        history.goBack();
+    })
     return (
         <>
-
             <div className={`container ${style.inputBox}`}>
                 <div className="row">
                     <form onSubmit={onSubmit} className={`col s12 `}>
 
                         <div className={` input-field col s9 ${style.inputTitleTodo}`} >
                             <input
-                                placeholder="Title task"
+                                placeholder="Placeholder"
                                 ref={register({ required: true })}
                                 name='todoTitle'
                                 type="text" className="validate" />
@@ -50,13 +59,12 @@ const TodoForm: React.FC<MakeTodoPropsType> = ({ addTodo }: MakeTodoPropsType) =
                         </div>
                     </form>
                 </div>
-
             </div>
-
-            <TodoListContainer />
 
         </>
     )
 }
 
-export default TodoForm;
+export default EditTodo;
+
+

@@ -2,8 +2,10 @@
 // Please do not change this file!
 interface CssExports {
   'complited': string;
+  'editLink': string;
   'titleEmptyTask': string;
   'todo': string;
+  'todoIcon': string;
   'todoListBox': string;
 }
 export const cssExports: CssExports;
