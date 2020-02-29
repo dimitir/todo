@@ -1,16 +1,15 @@
 
-
-
-
 export interface TodoItemType {
-    id: number;
+    _id: string;
     title: string;
     discription: string;
     completed?: boolean;
 }
 
-
- 
+export interface ActionTypeInitial {
+    type: string;
+    payloadInital: TodoItemType[];
+}
 
 export interface ActionTypeMake {
     type: string;
@@ -19,7 +18,7 @@ export interface ActionTypeMake {
 
 export interface ActionTypeUseId {
     type: string;
-    id: number;
+    _id: string;
 }
 
 
@@ -33,4 +32,4 @@ export interface InitialStateType {
     todoArr: any[] | TodoItemType[]
 }
 
-export interface ActionType extends ActionTypeUseId, ActionTypeMake { };
+export interface ActionType extends ActionTypeUseId, ActionTypeMake, ActionTypeInitial { };

@@ -1,7 +1,7 @@
 import MakeTodo from './MakeTodo';
 import { connect, ConnectedProps } from 'react-redux';
 import { addNewTodo } from '../../store/todo/actions';
-import { TodoItemType } from '../../store/types';
+import { TodoItemType } from '../../store/RootStore/types';
 import { Dispatch } from 'redux';
 
 

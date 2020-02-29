@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { MakeTodoPropsType } from './MakeTodoContainer';
 import style from './makeTodo.module.scss';
 import TodoListContainer from '../todoList/todoListContainer';
-import { FormData } from '../../store/types';
-
+import { FormData } from '../../store/RootStore/types';
+var ObjectID = require("bson-objectid");
 
 
 
@@ -12,7 +12,7 @@ const TodoForm: React.FC<MakeTodoPropsType> = ({ addTodo }: MakeTodoPropsType) =
     const { register, reset, handleSubmit, errors } = useForm<FormData>();
     const onSubmit = handleSubmit(({ todoTitle, todoDiscription }, e) => {
         const dataTodo = {
-            id: new Date().getTime(),
+            _id: ObjectID(),
             title: todoTitle,
             discription: todoDiscription,
             completed: false
@@ -52,9 +52,11 @@ const TodoForm: React.FC<MakeTodoPropsType> = ({ addTodo }: MakeTodoPropsType) =
                 </div>
 
             </div>
+            <div className='container'>
 
-            <TodoListContainer />
+                <TodoListContainer />
 
+            </div>
         </>
     )
 }

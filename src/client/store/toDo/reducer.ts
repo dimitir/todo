@@ -1,6 +1,6 @@
-import actionsApp from '../dispatchActions';
+import actionsApp from '../RootStore/dispatchActions';
 
-import { ActionType, InitialStateType, TodoItemType } from '../types';
+import { ActionType, InitialStateType, TodoItemType } from '../RootStore/types';
 
 
 const initialState: InitialStateType = {
@@ -10,8 +10,15 @@ const initialState: InitialStateType = {
 
 const todoReducer = (state = initialState, action: ActionType) => {
     switch (action.type) {
+        case actionsApp.SET_INITIAL_TODO:
+            return {
+                ...state,
+                todoArr: action.payloadInital
+            }
+
         case actionsApp.ADD_NEW_TODO:
-            state.todoArr.unshift(action.payload)
+            
+            state.todoArr.push(action.payload)
             return {
                 ...state,
                 todoArr: state.todoArr
@@ -19,7 +26,7 @@ const todoReducer = (state = initialState, action: ActionType) => {
 
         case actionsApp.CHANGE_COPMPLETED:
             const changeTodoArr = (state.todoArr as TodoItemType[]).map(todo => {
-                if (todo.id == action.id) {
+                if (todo._id == action._id) {
                     todo.completed = !todo.completed
                 }
                 return todo
@@ -30,7 +37,7 @@ const todoReducer = (state = initialState, action: ActionType) => {
             }
 
         case actionsApp.DELETE_TODO:
-            const deleteTodoArr = (state.todoArr as TodoItemType[]).filter(todo => todo.id !== action.id);
+            const deleteTodoArr = (state.todoArr as TodoItemType[]).filter(todo => todo._id !== action._id);
             console.log(state);
             return {
                 ...state,
@@ -39,7 +46,7 @@ const todoReducer = (state = initialState, action: ActionType) => {
 
         case actionsApp.EDIT_TODO:
             const editTodoArr = (state.todoArr as TodoItemType[]).map(todo => {
-                if (todo.id == action.payload.id) {
+                if (todo._id == action.payload._id) {
                     todo.title = action.payload.title;
                     todo.discription = action.payload.discription;
                 }

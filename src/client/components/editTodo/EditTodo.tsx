@@ -3,7 +3,7 @@ import queryString from 'query-string'
 import { TypePropsEdit } from './EditTodoContainer';
 import { useForm } from "react-hook-form";
 import style from '../makeTodo/makeTodo.module.scss';
-import { FormData, TodoItemType } from '../../store/types';
+import { FormData, TodoItemType } from '../../store/RootStore/types';
 import { useHistory } from 'react-router-dom'
 
 interface commonEditProps extends TypePropsEdit {
@@ -14,13 +14,13 @@ interface commonEditProps extends TypePropsEdit {
 
 const EditTodo: React.FC<commonEditProps> = ({ location, todoItems, editTodo }: commonEditProps) => {
 
+    console.log(todoItems);
     const history = useHistory();
     const query = queryString.parse(location.search);
     const idResently = query.id;
-    const idNumber = Number(idResently);
-    const resentlyTodo: TodoItemType[] = todoItems.todoArr.filter((todo: TodoItemType) => todo.id == idNumber);
-    console.group('jljkj');
-    console.log(resentlyTodo);
+
+    const resentlyTodo: TodoItemType[] = todoItems.todoArr.filter((todo: TodoItemType) => todo._id == idResently);
+  
     const { register, handleSubmit, errors } = useForm<FormData>({
         defaultValues: {
             todoTitle: resentlyTodo[0].title,
@@ -31,7 +31,7 @@ const EditTodo: React.FC<commonEditProps> = ({ location, todoItems, editTodo }: 
 
 
     const onSubmit = handleSubmit(({ todoTitle, todoDiscription }) => {
-        editTodo({ id: idNumber, title: todoTitle, discription: todoDiscription });
+        editTodo({ _id: resentlyTodo[0]._id, title: todoTitle, discription: todoDiscription});
         history.goBack();
     })
     return (
