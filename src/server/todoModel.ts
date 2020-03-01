@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 exports.todosInitial = [
     {
         title: "Работа",

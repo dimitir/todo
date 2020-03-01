@@ -3,7 +3,6 @@ import style from './navbar.module.scss'
 import { useLocation } from 'react-router-dom';
 const Navbar = () => {
 
-
     const location = useLocation();
 
     interface routerListType {

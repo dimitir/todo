@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 const TodoModel = require('./todoModel').TodoModel;
-
+import { Request, Response } from 'express';
+import { TodoItemType } from '../client/store/RootStore/types';
 const port = process.env.PORT || 8080;
 const app = express();
 const jsonParser = express.json();
@@ -24,39 +25,41 @@ connectDb()
     .on('disconnected', connectDb)
     .once('open', startServer)
 
-
-app.get('/api/todo', (req, res) => {
-    TodoModel.find({}, '')
-        .then(function (todo) {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.json(todo);
-            // console.log(todo);
-        })
-        .catch(function (err) {
-            res.status(500).send(err)
-        })
-})
-
-
-app.post('/api/todo', jsonParser, (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400);
-    }
-    res.json('ok');
+app.get('/api/todo', (req: any, res: any) => {
 
     (async () => {
         try {
-            const todo = await TodoModel.create(
-                {
-                    _id: req.body._id,
-                    title: req.body.title,
-                    discription: req.body.discription,
-                    completed: req.body.completed
-                }
-            );
-            const todoItem = await todo.save();
+            const todo = await TodoModel.find({});
+            await res.json(todo);
         }
+        catch (err) {
+            await res.status(500).send(err);
+        }
+    })()
 
+})
+
+
+
+app.post('/api/todo', jsonParser, (req: Request, res: Response) => {
+    if (!req.body) {
+        res.sendStatus(400);
+    }
+    res.json('ok');
+
+
+    const todoItem = {
+        _id: req.body._id,
+        title: req.body.title,
+        discription: req.body.discription,
+        completed: req.body.completed
+    };
+
+    (async () => {
+        try {
+            const todo: any = await TodoModel.create(todoItem);
+            await todo.save();
+        }
         catch (err) {
             console.error(err)
         }
@@ -64,7 +67,7 @@ app.post('/api/todo', jsonParser, (req, res) => {
 })
 
 
-app.delete('/api/todo/:id', (req, res) => {
+app.delete('/api/todo/:id', (req: Request, res: Response) => {
     const id = req.params.id;
     (async () => {
         try {
@@ -77,20 +80,18 @@ app.delete('/api/todo/:id', (req, res) => {
 });
 
 
-app.put('/api/todo/edit', jsonParser, (req, res) => {
-    if (!req.body) return res.sendStatus(400);
+app.put('/api/todo/edit', jsonParser, (req: Request, res: Response) => {
+    if (!req.body) res.sendStatus(400);
     const id = req.body._id;
 
     (async () => {
-        console.log('jk');
         try {
 
             const editingTodo = await TodoModel.findByIdAndUpdate({ _id: id }, req.body, { new: true });
-            const edited = await res.status(200).json(editingTodo);
+            const edited = res.status(200).json(editingTodo);
 
         } catch (err) {
-            // handleError(res, error.message);
-            console.err(err);
+            console.error(err);
 
         }
     })()
@@ -100,19 +101,16 @@ app.put('/api/todo/edit', jsonParser, (req, res) => {
 
 
 
-app.put('/api/todo/completed/:id', jsonParser, (req, res) => {
+app.put('/api/todo/completed/:id', jsonParser, (req: any, res: any) => {
     const id = req.params.id;
     (async () => {
         try {
             const todo = await TodoModel.findById(id, 'completed');
-            console.group('changecompleted');
-            console.log(todo);
             const editingTodo = await TodoModel.findByIdAndUpdate({ _id: id }, { completed: !todo.completed }, { new: true });
             const edited = await res.status(200).json(editingTodo);
         } catch (err) {
-            console.err(err);
+            console.error(err);
         }
     })()
 });
-
 

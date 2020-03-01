@@ -53,9 +53,7 @@ const TodoForm: React.FC<MakeTodoPropsType> = ({ addTodo }: MakeTodoPropsType) =
 
             </div>
             <div className='container'>
-
                 <TodoListContainer />
-
             </div>
         </>
     )
