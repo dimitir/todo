@@ -25,7 +25,7 @@ connectDb()
     .on('disconnected', connectDb)
     .once('open', startServer)
 
-app.get('/api/todo', (req: any, res: any) => {
+app.get('/api/todo', (req: Request, res: Response) => {
 
     (async () => {
         try {
@@ -57,7 +57,7 @@ app.post('/api/todo', jsonParser, (req: Request, res: Response) => {
 
     (async () => {
         try {
-            const todo: any = await TodoModel.create(todoItem);
+            const todo= await TodoModel.create(todoItem);
             await todo.save();
         }
         catch (err) {
@@ -86,7 +86,6 @@ app.put('/api/todo/edit', jsonParser, (req: Request, res: Response) => {
 
     (async () => {
         try {
-
             const editingTodo = await TodoModel.findByIdAndUpdate({ _id: id }, req.body, { new: true });
             const edited = res.status(200).json(editingTodo);
 
@@ -100,8 +99,7 @@ app.put('/api/todo/edit', jsonParser, (req: Request, res: Response) => {
 
 
 
-
-app.put('/api/todo/completed/:id', jsonParser, (req: any, res: any) => {
+app.put('/api/todo/completed/:id', jsonParser, (req: Request, res: Response) => {
     const id = req.params.id;
     (async () => {
         try {
